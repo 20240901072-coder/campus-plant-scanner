@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Campus Plant Scanner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f1f8f1;
+      padding: 20px;
+    }
+    h1 { color: #237b3b; }
+    #reader {
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    button {
+      background: #237b3b;
+      color: white;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌱 Scan a Plant</h1>
+  <p>Allow camera access and scan the plant QR code.</p>
+
+  <div id="reader"></div>
+  <p id="result"></p>
+
+  <script>
+    function onScanSuccess(decodedText) {
+      document.getElementById("result").innerText =
+        "QR Code scanned successfully!";
+
+      if (decodedText.startsWith("https://") ||
+          decodedText.startsWith("http://")) {
+        window.location.href = decodedText;
+      } else {
+        document.getElementById("result").innerText =
+          "Scanned Code: " + decodedText;
+      }
+    }
+
+    const scanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 10, qrbox: { width: 250, height: 250 } }
+    );
+
+    scanner.render(onScanSuccess);
+  </script>
+
+</body>
+</html>
